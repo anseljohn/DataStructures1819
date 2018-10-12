@@ -26,16 +26,18 @@ public class ScannerPractice {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String favFood = sc.next();
+        String favFood = sc.nextLine();
+        int amount = sc.nextInt();
         double liking = sc.nextDouble();
-        
-        while ( sc.hasNext() ) {
-            if ( sc.nextDouble() > liking ) {
-                favFood = sc.next();
-                sc.nextLine();
-                liking = sc.nextDouble();
-            }
-        }
+        sc.nextLine();
+        System.out.println( liking + " " + amount );
+//        while ( sc.hasNext() ) {
+//            if ( sc.nextDouble() > liking ) {
+//                favFood = sc.nextLine();
+//                amount = sc.nextInt();
+//                liking = sc.nextDouble();
+//            }
+//        }
         return favFood;
     }
 }
