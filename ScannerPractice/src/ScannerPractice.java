@@ -3,11 +3,16 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ScannerPractice {
+	
+    private static String favFood = "nothing yet";
+    private static int amount = 0;
+    private static double liking = 0.0;
+    private static int total = 0;
 
     static Scanner sc = null;
     public static void main(String[] args) {
         try {
-            System.out.println( getFavFood() );
+            System.out.print( "Your favorite food is " + getFavFood() + ".\nYou eat " + getFavFood() + " %" + ( amount/( double )total ) * 100+ " of the time." );
         }
         catch ( Exception e ) {
             System.out.println( e );
@@ -25,19 +30,15 @@ public class ScannerPractice {
             sc = new Scanner( f );
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        String compare;
-        String favFood = null;
-        int amount = 0;
-        double liking = 0.0;
+        }        
         while ( sc.hasNext() ) {
         	favFood = sc.nextLine();
         	amount = sc.nextInt();
-        	liking = sc.nextDouble()
+        	total += amount;
+        	liking = sc.nextDouble();
+        	sc.nextLine();
         	
-//            amount = sc.nextInt();
-//            liking = sc.nextDouble();
         }
-        return null;
+        return favFood;
     }
 }
