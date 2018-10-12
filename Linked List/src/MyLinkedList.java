@@ -35,8 +35,16 @@ public class MyLinkedList<E> {
      * @returns true all the time
      */
     public boolean add( E e ) {
-        Node<E> toAdd = new Node<E>( e );
-        
+        if ( head == null ) {
+        	head = new Node<E>( e );
+        }
+        else {
+        	Node<E> tail = head;
+        	for ( Node<E> curr = head; curr != null; curr = curr.next ) {
+        		tail = curr;
+        	}
+        	tail.next = new Node<E>( e );
+        }
         size++;
         return true;
     }
@@ -47,14 +55,10 @@ public class MyLinkedList<E> {
      */
     public String toString() {
     	String toReturn = "[";
-    	for ( Node<E> current = head; current.next != null; current = current.next ) {
-    		if ( current.next != null ) {
-    			toReturn += current + ", ";
-    		}
-    		else {
-    			toReturn += current.
-    		}
+    	for ( Node<E> current = head; current != null; current = current.next ) {
+    		toReturn += current + ", ";
     	}
+    	return toReturn;
     }
     
     /**
@@ -67,12 +71,21 @@ public class MyLinkedList<E> {
         private Node<E> next;
         private E data;
         
+        /**
+         * Constructs a node with data and next node
+         * @param data the data to set the node's data to
+         * @param next the node that this new node looks to
+         */
         public Node( E data, Node<E> next ) {
             this.next = next;
             this.data = data;
             
         }
         
+        /**
+         * constructs a new node with just data and next as null
+         * @param data the data to set the node to
+         */
         public Node( E data ) {
             next = null;
             this.data = data;

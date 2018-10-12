@@ -26,7 +26,7 @@ public class MyLinkedListTest {
      * tests
      */
     public void tearDown() {
-        
+        regular = null;
     }
     
     // add( E e ) tests
@@ -35,6 +35,6 @@ public class MyLinkedListTest {
      */
     @Test
     public void testAdd() {
-        
+        assertEquals( "[1, 2, 3, 4, 5]", regular.toString() );
     }
 }
