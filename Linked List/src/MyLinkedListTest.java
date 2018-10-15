@@ -1,5 +1,7 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -14,9 +16,10 @@ public class MyLinkedListTest {
 	/**
 	 * tests
 	 */
+	@Before
 	public void setUp() {
         regular = new MyLinkedList<Integer>();
-        for ( int i = 1; i < 6; i++ ) {
+        for ( Integer i = 1; i < 6; i++ ) {
             regular.add( i );
         }
         
@@ -25,6 +28,7 @@ public class MyLinkedListTest {
     /**
      * tests
      */
+	@After
     public void tearDown() {
         regular = null;
     }

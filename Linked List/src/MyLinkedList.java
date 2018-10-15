@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Collection;
 
 /**
  * Recreation of the LinkedList class
@@ -40,8 +40,8 @@ public class MyLinkedList<E> {
         }
         else {
         	Node<E> tail = head;
-        	for ( Node<E> curr = head; curr != null; curr = curr.next ) {
-        		tail = curr;
+        	while ( tail.next != null ) {
+        		tail = tail.next;
         	}
         	tail.next = new Node<E>( e );
         }
@@ -55,9 +55,12 @@ public class MyLinkedList<E> {
      */
     public String toString() {
     	String toReturn = "[";
-    	for ( Node<E> current = head; current != null; current = current.next ) {
-    		toReturn += current + ", ";
+    	Node<E> current = head;
+    	while ( current.next != null ) {
+    		toReturn += current.data + ", ";
+    		current = current.next;
     	}
+    	toReturn += current.data + "]";
     	return toReturn;
     }
     
