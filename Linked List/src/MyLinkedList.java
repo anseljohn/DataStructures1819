@@ -34,7 +34,7 @@ public class MyLinkedList<E> {
      * adds object to the linkedlist
      * 
      * @param e the element to add to the linkedlist
-     * @returns true all the time
+     * @return true all the time
      */
     public boolean add( E e ) {
         if ( head == null ) {
@@ -65,11 +65,19 @@ public class MyLinkedList<E> {
         }
         temp.next = new Node<E>( e, temp.next );
     }
+    
+    /**
+     * removes the specified object
+     * @param o the object to remove
+     * @return true if the list contains the element
+     */
+    public boolean remove( Object o ) {
+        return false;
+    }
 
     /**
      * Used to create a visual of the linked list ( readable )
-     * 
-     * @returns a string version of the linkedlist
+     * @return a string version of the linkedlist
      */
     public String toString() {
         String toReturn = "[";
