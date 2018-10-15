@@ -41,4 +41,23 @@ public class MyLinkedListTest {
     public void testAdd() {
         assertEquals( "[1, 2, 3, 4, 5]", regular.toString() );
     }
+    
+    // add( int index, E e ) tests
+    /**
+     * tests
+     */
+    @Test
+    public void testAddReg() {
+        regular.add( 2, 10 );
+        assertEquals( "[1, 2, 10, 3, 4, 5]", regular.toString() );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
+    public void testAddRegMore() {
+        regular.add( 4, 10 );
+        assertEquals( "[1, 2, 3, 4, 10, 5]", regular.toString() );
+    }
 }
