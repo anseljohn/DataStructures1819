@@ -72,7 +72,16 @@ public class MyLinkedList<E> {
      * @return true if the list contains the element
      */
     public boolean remove( Object o ) {
-        return false;
+        Node<E> temp = head;
+        while( ! temp.next.data.equals( o ) ) {
+            temp = temp.next;
+            if ( temp.next == null ) {
+                return false;
+            }
+        }
+        
+        temp.next = temp.next.next;
+        return true;
     }
 
     /**
