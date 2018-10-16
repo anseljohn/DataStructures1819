@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -59,5 +59,24 @@ public class MyLinkedListTest {
     public void testAddRegMore() {
         regular.add( 4, 10 );
         assertEquals( "[1, 2, 3, 4, 10, 5]", regular.toString() );
+    }
+    
+    // remove( Object o ) tests
+    /**
+     * tests
+     */
+    @Test
+    public void testRemoveReg() {
+        regular.remove( 2 );
+        assertEquals( "[1, 3, 4, 5]", regular.toString() );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
+    public void testRemoveRegNotThere() {
+        assertFalse( regular.remove( 10 ) );
+        assertEquals( "[1, 2, 3, 4, 5]", regular.toString() );
     }
 }
