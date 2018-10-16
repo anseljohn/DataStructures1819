@@ -83,6 +83,22 @@ public class MyLinkedList<E> {
         temp.next = temp.next.next;
         return true;
     }
+    
+    /**
+     * returns the element at index index
+     * @return the element at the specified index
+     * @throws IndexOutOfBoundsException when index < 0 || index >= size
+     */
+    public E get( int index ) {
+        if ( index < 0 || index >= size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> temp = head;
+        for ( int i = 0; i <= index; i++ ) {
+            temp = temp.next;
+        }
+        return temp.data;
+    }
 
     /**
      * Used to create a visual of the linked list ( readable )
