@@ -1,9 +1,15 @@
+Macaroni
+10
+7.0
 Beef
-200
-9.0
-Sushi
-1000
-9.5
-Crackers
-123
+100
+9.9
+Chili
+7
+7.8
+Bark
+50
+0.0
+Car battery acid
+123123
 10.0
