@@ -67,7 +67,7 @@ public class MyLinkedListTest {
      */
     @Test
     public void testRemoveReg() {
-        regular.remove( 2 );
+        regular.remove( ( Object )2 );
         assertEquals( "[1, 3, 4, 5]", regular.toString() );
     }
     
@@ -93,11 +93,11 @@ public class MyLinkedListTest {
     /**
      * tests
      */
-//    @Test
-//    public void testRemoveRegIndex2() {
-//        regular.remove( 2 );
-//        assertEquals( "[1, 2, 4, 5]", regular.toString() );
-//    }
+    @Test
+    public void testRemoveRegIndex2() {
+        regular.remove( 2 );
+        assertEquals( "[1, 2, 4, 5]", regular.toString() );
+    }
     
     // get( int index ) tests
     /**
