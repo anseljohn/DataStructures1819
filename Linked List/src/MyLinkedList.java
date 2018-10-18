@@ -64,6 +64,7 @@ public class MyLinkedList<E> {
             temp = temp.next;
         }
         temp.next = new Node<E>( e, temp.next );
+        size++;
     }
     
     /**
@@ -79,10 +80,31 @@ public class MyLinkedList<E> {
                 return false;
             }
         }
+        size--;
         
         temp.next = temp.next.next;
         return true;
     }
+    
+    /**
+     * removes the object at the index
+     * @param index the index of the object to remove
+     * @return the object at the index
+     * @throws IndexOutOfBoundsException when index < 0 
+     * || index >= size
+     */
+   public E remove( int index ) {
+       Node<E> temp = head;
+       E rem;
+       for ( int i = 0; i < index; i++ ) {
+           temp = temp.next;
+       }
+       rem = temp.data;
+       temp.next = temp.next.next;
+       size--;
+       return rem;
+       // 1 -> 2 -> 3
+   }
     
     /**
      * returns the element at index index
@@ -94,10 +116,16 @@ public class MyLinkedList<E> {
             throw new IndexOutOfBoundsException();
         }
         Node<E> temp = head;
-        for ( int i = 0; i <= index; i++ ) {
+        for ( int i = 0; i < index; i++ ) {
             temp = temp.next;
         }
         return temp.data;
+    }
+    
+    public E set( int index, E obj ) {
+        E toReturn = remove( index );
+        add( index, obj );
+        return toReturn;
     }
 
     /**
