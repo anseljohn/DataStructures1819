@@ -94,16 +94,19 @@ public class MyLinkedList<E> {
      * || index >= size
      */
    public E remove( int index ) {
+       if ( index < 0 || index >= size ) {
+           throw new IndexOutOfBoundsException();
+       }
        Node<E> temp = head;
        E rem;
-       for ( int i = 0; i < index; i++ ) {
+       for ( int i = 0; i < index - 1; i++ ) {
            temp = temp.next;
        }
-       rem = temp.data;
+       rem = temp.next.data;
        temp.next = temp.next.next;
        size--;
        return rem;
-       // 1 -> 2 -> 3
+       // 1 -> 2 -> 3 -> 4 -> 5
    }
     
     /**
