@@ -90,6 +90,15 @@ public class MyLinkedListTest {
         assertEquals( "[1, 3, 4, 5]", regular.toString() );
     }
     
+    /**
+     * tests
+     */
+//    @Test
+//    public void testRemoveRegIndex2() {
+//        regular.remove( 2 );
+//        assertEquals( "[1, 2, 4, 5]", regular.toString() );
+//    }
+    
     // get( int index ) tests
     /**
      * tests
@@ -103,9 +112,9 @@ public class MyLinkedListTest {
     /**
      * tests
      */
-    @Test
-    public void testSetRegular() {
-        regular.set( 2, 9 );
-        assertEquals( "[1, 2, 9, 4, 5]", regular.toString() );
-    }
+//    @Test
+//    public void testSetRegular() {
+//        regular.set( 2, 9 );
+//        assertEquals( "[1, 2, 9, 4, 5]", regular.toString() );
+//    }
 }
