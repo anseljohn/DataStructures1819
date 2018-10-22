@@ -32,6 +32,7 @@ public class MyLinkedListTest {
 	public void setUp() {
         regular = new MyLinkedList<Integer>();
         addAll = new ArrayList<Integer>();
+        regEquals = new MyLinkedList<Integer>();
         for ( Integer i = 1; i < 6; i++ ) {
             regular.add( i );
             addAll.add( i );
@@ -55,6 +56,9 @@ public class MyLinkedListTest {
     public void tearDown() {
         regular = null;
         empty = null;
+        addAll = null;
+        repeat = null;
+        regEquals = null;
     }
     
     // add( E e ) tests
@@ -258,4 +262,6 @@ public class MyLinkedListTest {
      */
     @Test
     public void testRegEqual() {
+        assertTrue( regular.equals( regEquals ) );
+    }
 }
