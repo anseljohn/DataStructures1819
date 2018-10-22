@@ -40,7 +40,8 @@ public class MyLinkedList<E> {
     public boolean add( E e ) {
         if ( head == null ) {
             head = new Node<E>( e );
-        } else {
+        } 
+        else {
             Node<E> tail = head;
             while ( tail.next != null ) {
                 tail = tail.next;
@@ -57,7 +58,7 @@ public class MyLinkedList<E> {
      * @param e the element to add
      */
     public void add( int index, E e ) {
-        if ( index < 0 || index >= size ) {
+        if ( index < 0 || index > size ) {
             throw new IndexOutOfBoundsException();
         }
         Node<E> temp = head;
@@ -75,7 +76,7 @@ public class MyLinkedList<E> {
      */
     public boolean remove( Object o ) {
         Node<E> temp = head;
-        while( ! temp.next.data.equals( o ) ) {
+        while ( ! temp.next.data.equals( o ) ) {
             temp = temp.next;
             if ( temp.next == null ) {
                 return false;
@@ -94,23 +95,24 @@ public class MyLinkedList<E> {
      * @throws IndexOutOfBoundsException when index < 0 
      * || index >= size
      */
-   public E remove( int index ) {
-       if ( index < 0 || index >= size ) {
-           throw new IndexOutOfBoundsException();
-       }
-       Node<E> temp = head;
-       E rem;
-       for ( int i = 0; i < index - 1; i++ ) {
-           temp = temp.next;
-       }
-       rem = temp.next.data;
-       temp.next = temp.next.next;
-       size--;
-       return rem;
-   }
+    public E remove( int index ) {
+        if ( index < 0 || index >= size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> temp = head;
+        E rem;
+        for ( int i = 0; i < index - 1; i++ ) {
+            temp = temp.next;
+        }
+        rem = temp.next.data;
+        temp.next = temp.next.next;
+        size--;
+        return rem;
+    }
     
     /**
      * returns the element at index index
+     * @param index the element to get
      * @return the element at the specified index
      * @throws IndexOutOfBoundsException when 
      * index < 0 || index >= size
@@ -126,7 +128,17 @@ public class MyLinkedList<E> {
         return temp.data;
     }
     
+    /**
+     * sets a thing to a thing
+     * @param index the index to change
+     * @param obj the obj to replace the index w
+     * @throws IndexOutOfBoundsException if index < 0 || index >= size
+     * @return the previous obj
+     */
     public E set( int index, E obj ) {
+        if ( index < 0 || index >= size ) {
+            throw new IndexOutOfBoundsException();
+        }
         E toReturn = remove( index );
         add( index, obj );
         return toReturn;
@@ -247,6 +259,7 @@ public class MyLinkedList<E> {
     
     /**
      * returns if the object is equal to the linkedlist
+     * @param o the object to test
      * @return if the object is equal to the linkedlist
      */
     public boolean equals( Object o ) {
@@ -259,7 +272,7 @@ public class MyLinkedList<E> {
         MyLinkedList other = ( MyLinkedList ) o;
         if ( size() == other.size() ) {
             for (int i = 0; i < size; i++ ) {
-                if ( get( i ) != other.get( i ) ) {
+                if ( ! get( i ).equals( other.get( i ) ) ) {
                     return false;
                 }
             }
