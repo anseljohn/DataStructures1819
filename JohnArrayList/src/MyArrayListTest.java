@@ -1,4 +1,7 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,416 +11,404 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test methods for MyArrayList class
- * 
+ * Test class for MyLinkedList
  * @author AnselmJA20
- * @version 9.13.18
+ * @version 1.0
  */
-public class MyArrayListTest {
-    private MyArrayList<Integer> regular;
-    private MyArrayList<Integer> ranRepet;
-    private MyArrayList<Integer> tooSmall;
-    private MyArrayList<Integer> empty;
-    private MyArrayList<Integer> sizeLen;
-    private MyArrayList<Integer> testCollection;
-    private MyArrayList<Integer> regToTest;
-
-    /**
-     * Set up the field variable MyArrayLists
-     */
-    @Before
-    public void setUp() {
-        regular = new MyArrayList<Integer>( 5 );
-        regToTest = new MyArrayList<Integer>( 5 );
-        for ( int i = 1; i < 6; i++ ) {
+public class MyLinkedListTest {
+    private MyLinkedList<Integer> regular;
+	private MyLinkedList<Integer> empty;
+	private MyLinkedList<Integer> repeat;
+	private MyLinkedList<Integer> regEquals;
+	private MyLinkedList<Integer> testConstructColl;
+	
+	private Collection<Integer> addAll;
+	
+	
+    
+	/**
+	 * tests
+	 */
+	@Before
+	public void setUp() {
+        regular = new MyLinkedList<Integer>();
+        addAll = new ArrayList<Integer>();
+        regEquals = new MyLinkedList<Integer>();
+        
+        for ( Integer i = 1; i < 6; i++ ) {
             regular.add( i );
-            regToTest.add( i );
+            addAll.add( i );
+            regEquals.add( i );
         }
-
-        ranRepet = new MyArrayList<Integer>();
-        for ( int i = 1; i <= 3; i++ ) {
-            ranRepet.add( i );
-            ranRepet.add( i );
-            ranRepet.add( i );
-        }
-
-        tooSmall = new MyArrayList<Integer>( 2 );
-        for ( int i = 0; i < 3; i++ ) {
-            tooSmall.add( i );
+        testConstructColl = new MyLinkedList<Integer>( addAll );
+        
+        empty = new MyLinkedList<Integer>();
+        
+        repeat = new MyLinkedList<Integer>();
+        for ( Integer i = 1; i < 6; i++ ) {
+            repeat.add( i );
+            repeat.add( i );
         }
         
-        empty = new MyArrayList<Integer>( 0 );
-        
-        sizeLen = new MyArrayList<Integer>( 3 );
-        for ( int i = 0; i < 3; i++ ) {
-            sizeLen.add( i );
-        }
-        
-        Collection<Integer> tempCollection = new ArrayList<Integer>();
-        for ( int i = 1; i < 6; i++ ) {
-            tempCollection.add( i );
-        }
-        testCollection = new MyArrayList<Integer>( tempCollection );
     }
-
+    
     /**
-     * Set the fields back to null between methods
+     * tests
      */
-    @After
+	@After
     public void tearDown() {
         regular = null;
-        ranRepet = null;
-        tooSmall = null;
         empty = null;
-        sizeLen = null;
+        addAll = null;
+        repeat = null;
+        regEquals = null;
     }
-
     
-    // add( Object o ) tests
-    /**
-     * Test
-     */
-    @Test
-    public void testAddRegObj() {
-        regular.add( 6 );
-        assertEquals( "[1, 2, 3, 4, 5, 6]", regular.toString() );
-    }
-
+    // add( E e ) tests
     /**
      * test
      */
     @Test
-    public void testAddTooSmall() {
-        tooSmall.add( 2 );
-        assertEquals( "[0, 1, 2, 2]", tooSmall.toString() );
+    public void testAdd() {
+        assertEquals( "[1, 2, 3, 4, 5]", regular.toString() );
     }
-
     
-    // add( int index, Object obj ) tests
+    // add( int index, E e ) tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testAddToRegIndex() {
-        regular.add( 0, 0 );
-        assertEquals( "[0, 1, 2, 3, 4, 5]", regular.toString() );
+    public void testAddReg() {
+        regular.add( 2, 10 );
+        assertEquals( "[1, 2, 10, 3, 4, 5]", regular.toString() );
     }
-
+    
     /**
-     * test
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testAddBig() {
+        regular.add( 123123, 3 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testAddSize() {
+        regular.add( regular.size(), 2 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testAddZero() {
+        regular.add( -12, 3 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
      */
     @Test
-    public void testAddToRegRandomIndex() {
-        regular.add( 2, 23 );
-        assertEquals( "[1, 2, 23, 3, 4, 5]", regular.toString() );
+    public void testAddRegMore() {
+        regular.add( 4, 10 );
+        assertEquals( "[1, 2, 3, 4, 10, 5]", regular.toString() );
     }
-
     
     // remove( Object o ) tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testRemoveObjectReg() {
-        regular.remove( new Integer( 2 ) );
+    public void testRemoveReg() {
+        regular.remove( ( Object )2 );
         assertEquals( "[1, 3, 4, 5]", regular.toString() );
     }
     
-
+    /**
+     * tests
+     */
+    @Test
+    public void testRemoveRegNotThere() {
+        assertFalse( regular.remove( ( Object ) 10 ) );
+        assertEquals( "[1, 2, 3, 4, 5]", regular.toString() );
+    }
+    
     // remove( int index ) tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testRemoveIndexReg() {
-        regular.remove( 0 );
-        assertEquals( "[2, 3, 4, 5]", regular.toString() );
+    public void testRemoveRegIndex() {
+        regular.remove( 1 );
+        assertEquals( "[1, 3, 4, 5]", regular.toString() );
     }
     
     /**
-     * test
+     * tests
      */
     @Test ( expected = IndexOutOfBoundsException.class )
-    public void testRemoveIndexLessThanZero() {
+    public void testRemoveZero() {
         regular.remove( -1 );
-        assertEquals( regToTest, regToTest );
+        assertEquals( regular, regular );
     }
     
     /**
-     * test
+     * tests
      */
     @Test ( expected = IndexOutOfBoundsException.class )
-    public void testRemoveIndexLargerThanSize() {
-        regular.remove( 100 );
-        assertEquals( regToTest, regToTest );
-    }
-
-    
-    // indexOf( Object o ) tests
-    /**
-     * test
-     */
-    @Test
-    public void testIndexOfReg() {
-        assertEquals( 1, regular.indexOf( 2 ) );
+    public void testRemoveBig() {
+        regular.remove( 1231 );
+        assertEquals( regular, regular );
     }
     
     /**
-     * test
-     */
-    @Test
-    public void testIndexNotThere() {
-        assertEquals( -1, regular.indexOf( 123123 ) );
-    }
-
-    
-    // lastIndexOf( Object o ) tests
-    /**
-     * test
-     */
-    @Test
-    public void testRandomRepetitive() {
-        assertEquals( 5, ranRepet.lastIndexOf( 2 ) );
-    }
-    
-    /**
-     * test
-     */
-    @Test
-    public void testLastIndexOfNotThere() {
-        assertEquals( -1, regular.lastIndexOf( 123182124 ) );
-    }
-
-    
-    // get( index i ) tests
-    /**
-     * test
-     */
-    @Test
-    public void testGetReg() {
-        assertEquals( new Integer( 2 ), regular.get( 1 ) );
-    }
-    
-    /**
-     * test
+     * tests
      */
     @Test ( expected = IndexOutOfBoundsException.class )
-    public void testGetIndexLessThanZero() {
+    public void testRemoveSize() {
+        regular.remove( regular.size() );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
+    public void testRemoveRegIndex2() {
+        regular.remove( 2 );
+        assertEquals( "[1, 2, 4, 5]", regular.toString() );
+    }
+    
+    // get( int index ) tests
+    /**
+     * tests
+     */
+    @Test
+    public void testGetRegular() {
+        assertEquals( 3, ( Object )regular.get( 2 ) );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testGetTooSmall() {
         regular.get( -1 );
-        assertEquals( regToTest, regToTest );
+        assertEquals( regular, regular );
     }
     
     /**
-     * test
+     * tests
      */
     @Test ( expected = IndexOutOfBoundsException.class )
-    public void testGetIndexGreaterEqualToSize() {
-        regular.get( 5 );
-        assertEquals( regToTest, regToTest );
+    public void testGetTooBig() {
+        regular.get( 123 );
+        assertEquals( regular, regular );
     }
-
     
-    // set( int Index, E o ) tests
     /**
-     * test
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testGetSize() {
+        regular.get( regular.size() );
+        assertEquals( regular, regular );
+    }
+    
+    // set( int index, E obj ) tests
+    /**
+     * tests
      */
     @Test
-    public void testSetReg() {
-        regular.set( 1, 234 );
-        assertEquals( "[1, 234, 3, 4, 5]", regular.toString() );
+    public void testSetRegular() {
+        regular.set( 2, 9 );
+        assertEquals( "[1, 2, 9, 4, 5]", regular.toString() );
     }
-
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testSetTooSmall() {
+        regular.set( -1,  1 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testSetTooBig() {
+        regular.set( 123,  2 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testSetSize() {
+        regular.set( regular.size(), 2 );
+        assertEquals( regular, regular );
+    }
     
     // size() tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testSize() {
+    public void testSizeReg() {
         assertEquals( 5, regular.size() );
     }
-
     
     // contains( Object o ) tests
     /**
-     * test
+     * tests
      */
     @Test
     public void testContainsReg() {
-        assertTrue( regular.contains( 1 ) );
+        assertTrue( regular.contains( 3 ) );
     }
     
     /**
-     * test
+     * tests
      */
     @Test
-    public void testContainsNot() {
-        assertFalse( regular.contains( 7423847 ) );
+    public void testNoContainsReg() {
+        assertFalse( regular.contains( 123 ) );
     }
-    
     
     // isEmpty() tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testIsEmptyWithEmpty() {
-        assertTrue( empty.isEmpty() );
-    }
-    
-    /**
-     * test
-     */
-    @Test
-    public void testIsEmptyNotEmpty() {
+    public void testIsEmptyReg() {
         assertFalse( regular.isEmpty() );
     }
     
-    
-    // toString tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testToString() {
-        assertEquals( "[1, 2, 3, 4, 5]", regular.toString() );
+    public void testIsEmptyIs() {
+        assertTrue( empty.isEmpty() );
     }
-
     
-    // addAll tests
+    // addAll( Collection<E> c ) tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testAddAll() {
-        Collection<Integer> vals = new ArrayList<Integer>();
-        for ( int i = 1; i < 6; i++ ) {
-            vals.add( i );
-        }
-        empty.addAll( vals );
-        assertEquals( "[1, 2, 3, 4, 5]", empty.toString() );
+    public void testAddAllRegToReg() {
+        regular.addAll( addAll );
+        assertEquals( "[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]", regular.toString() );
     }
-    
-    /**
-     * test
-     */
-    @Test ( expected = NullPointerException.class )
-    public void testAddAllNull() {
-        regToTest.addAll( null );
-    }
-    
-    
-    // trimToSize() tests
-    /**
-     * test
-     */
-    @Test
-    public void testTrimToSize() {
-        ranRepet.trimToSize();
-        assertEquals( "[1, 1, 1, 2, 2, 2, 3, 3, 3]", 
-                    ranRepet.toString() );
-    }
-    
-    /**
-     * test
-     */
-    @Test
-    public void testTrimSizeLen() {
-        sizeLen.trimToSize();
-        assertEquals( "[0, 1, 2]", sizeLen.toString() );
-    }
-    
     
     // clear() tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testClear() {
+    public void testClearReg() {
         regular.clear();
         assertEquals( "[]", regular.toString() );
     }
     
+    // indexOf( Object o ) tests
+    /**
+     * tests
+     */
+    @Test
+    public void testIndexOfReg() {
+        assertEquals( 2, regular.indexOf( 3 ) );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
+    public void testIndexRegNot() {
+        assertEquals( -1, regular.indexOf( 324 ) );
+    }
+    
+    // lastIndexOf( Object o ) tests
+    /**
+     * tests
+     */
+    @Test
+    public void testLastIndexOfRepeat() {
+        assertEquals( 5, repeat.lastIndexOf( 3 ) );
+    }
     
     // removeRange( int from, int to ) tests
     /**
      * tests
      */
     @Test
-    public void testRemoveRangeReg() {
-        // 1, 2, 3, 4, 5
-        //1, 5
-        regular.removeRange( 1, 3 );
-        assertEquals( "[1, 5]", regular.toString() );
+    public void testRemoveRangeRepeat() {
+        repeat.removeRange( 3,  6 );
+        // [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
+        assertEquals( "[1, 1, 2, 4, 4, 5, 5]", repeat.toString() );
     }
-    
-    /**
-     * test
-     */
-    @Test ( expected = IndexOutOfBoundsException.class )
-    public void testRemoveRangeFromZero() {
-        regToTest.removeRange( -123, 2 );
-    }
-    
-    /**
-     * test
-     */
-    @Test ( expected = IndexOutOfBoundsException.class )
-    public void testRemoveRangeToSize() {
-        regToTest.removeRange( 0, 1231231 );
-    }
-    
-    /**
-     * test
-     */
-    @Test ( expected = IndexOutOfBoundsException.class )
-    public void testRemoveRangeToFrom() {
-        regToTest.removeRange( 213123123, 3 );
-    }
-    
     
     // toArray() tests
     /**
      * tests
      */
     @Test
-    public void testToArrayReg() {
-        assertArrayEquals( new Object[] {1, 2, 3, 4, 5},
-                    regular.toArray() );
+    public void testRegToArray() {
+        Object[] testing = { 1, 2, 3, 4, 5 };
+        assertArrayEquals( testing, regular.toArray() );
     }
     
-    
-    // equals() tests
-    /**
-     * tests
-     */
-    @Test ( expected = NullPointerException.class )
-    public void testEqualsNull() {
-        regular.equals( null );
-    }
-    
+    // equals( Object o ) tests
     /**
      * tests
      */
     @Test
-    public void testEqualsRegs() {
-        assertTrue( regular.equals( regToTest ) );
+    public void testRegNotEqual() {
+        assertFalse( regular.equals( repeat ) );
     }
     
     /**
      * tests
      */
     @Test
-    public void testEqualsNotEquals() {
-        assertFalse( regular.equals( tooSmall ) );
+    public void testRegItself() {
+        MyLinkedList<Integer> test = regular;
+        test.remove( 2 );
+        test.add( 3 );
+        assertTrue( regular.equals( test ) );
     }
     
-    // addCollection tests
     /**
-     * test
+     * tests
      */
     @Test
-    public void testToStringCollection() {
-        assertEquals( "[1, 2, 3, 4, 5]", testCollection.toString() );
+    public void testRegWrongObj() {
+        assertFalse( regular.equals( "ejkorpwkejpor" ) );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
+    public void testRegEqual() {
+        assertTrue( regular.equals( regEquals ) );
+    }
+    
+    // toString() tests
+    /**
+     * tests
+     */
+    @Test
+    public void testCollectionConstructor() {
+        assertEquals( "[1, 2, 3, 4, 5]", testConstructColl.toString() );
     }
 }
