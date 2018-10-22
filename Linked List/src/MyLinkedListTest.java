@@ -16,10 +16,11 @@ import org.junit.Test;
  * @version 1.0
  */
 public class MyLinkedListTest {
-	private MyLinkedList<Integer> regular;
+    private MyLinkedList<Integer> regular;
 	private MyLinkedList<Integer> empty;
 	private MyLinkedList<Integer> repeat;
 	private MyLinkedList<Integer> regEquals;
+	private MyLinkedList<Integer> testConstructColl;
 	
 	private Collection<Integer> addAll;
 	
@@ -33,11 +34,13 @@ public class MyLinkedListTest {
         regular = new MyLinkedList<Integer>();
         addAll = new ArrayList<Integer>();
         regEquals = new MyLinkedList<Integer>();
+        
         for ( Integer i = 1; i < 6; i++ ) {
             regular.add( i );
             addAll.add( i );
             regEquals.add( i );
         }
+        testConstructColl = new MyLinkedList<Integer>( addAll );
         
         empty = new MyLinkedList<Integer>();
         
@@ -83,6 +86,24 @@ public class MyLinkedListTest {
     /**
      * tests
      */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testAddBig() {
+        regular.add( 123123, 3 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testAddZero() {
+        regular.add( -12, 3 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
     @Test
     public void testAddRegMore() {
         regular.add( 4, 10 );
@@ -121,6 +142,33 @@ public class MyLinkedListTest {
     /**
      * tests
      */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testRemoveZero() {
+        regular.remove( -1 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testRemoveBig() {
+        regular.remove( 1231 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testRemoveSize() {
+        regular.remove( regular.size() );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
     @Test
     public void testRemoveRegIndex2() {
         regular.remove( 2 );
@@ -136,6 +184,33 @@ public class MyLinkedListTest {
         assertEquals( 3, ( Object )regular.get( 2 ) );
     }
     
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testGetTooSmall() {
+        regular.get( -1 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testGetTooBig() {
+        regular.get( 123 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testGetSize() {
+        regular.get( regular.size() );
+        assertEquals( regular, regular );
+    }
+    
     // set( int index, E obj ) tests
     /**
      * tests
@@ -144,6 +219,33 @@ public class MyLinkedListTest {
     public void testSetRegular() {
         regular.set( 2, 9 );
         assertEquals( "[1, 2, 9, 4, 5]", regular.toString() );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testSetTooSmall() {
+        regular.set( -1,  1 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testSetTooBig() {
+        regular.set( 123,  2 );
+        assertEquals( regular, regular );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testSetSize() {
+        regular.set( regular.size(), 2 );
+        assertEquals( regular, regular );
     }
     
     // size() tests
@@ -218,6 +320,14 @@ public class MyLinkedListTest {
         assertEquals( 2, regular.indexOf( 3 ) );
     }
     
+    /**
+     * tests
+     */
+    @Test
+    public void testIndexRegNot() {
+        assertEquals( -1, regular.indexOf( 324 ) );
+    }
+    
     // lastIndexOf( Object o ) tests
     /**
      * tests
@@ -261,7 +371,35 @@ public class MyLinkedListTest {
      * tests
      */
     @Test
+    public void testRegItself() {
+        MyLinkedList<Integer> test = regular;
+        test.remove( 2 );
+        test.add( 3 );
+        assertTrue( regular.equals( test ) );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
+    public void testRegWrongObj() {
+        assertFalse( regular.equals( "ejkorpwkejpor" ) );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
     public void testRegEqual() {
         assertTrue( regular.equals( regEquals ) );
+    }
+    
+    // toString() tests
+    /**
+     * tests
+     */
+    @Test
+    public void testCollectionConstructor() {
+        assertEquals( "[1, 2, 3, 4, 5]", testConstructColl.toString() );
     }
 }
