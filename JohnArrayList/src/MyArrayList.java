@@ -1,305 +1,339 @@
 import java.util.Collection;
 
 /**
- * Making the ArrayList class woot woot
+ * Recreation of the LinkedList class
  * 
- * @author AnselmJA20
- * @param E the Object type
- * @version 3.14159
+ * @author AnselmJA20 John Anselmo
+ * @version 1.0
+ * @param <E> the Object type
  */
-
-public class MyArrayList<E> {
+public class MyLinkedList<E> {
     private int size;
-    private Object[] vals;
+    private Node<E> head;
 
     /**
-     * Default constructor setting the size to 0
-     *  and the size to 8
+     * Constructs an empty list
      */
-    public MyArrayList() {
+    public MyLinkedList() {
         size = 0;
-        vals = new Object[8];
+        head = null;
     }
 
     /**
-     * Another constructor except it sets the size to a 
-     * user inputted value
+     * Constructs a MyLinkedList with a collection
      * 
-     * @param startCapacity the capacity to start at
+     * @param c the collection to construct the 
+     * linkedlist with
      */
-    public MyArrayList( int startCapacity ) {
-        size = 0;
-        vals = new Object[startCapacity];
+    public MyLinkedList( Collection<E> c ) {
+        for ( E e : c ) {
+            add( e );
+        }
+    }
+
+    /**
+     * adds object to the linkedlist
+     * 
+     * @param e the element to add to the linkedlist
+     * @return true all the time
+     */
+    public boolean add( E e ) {
+        if ( head == null ) {
+            head = new Node<E>( e );
+        } 
+        else {
+            Node<E> tail = head;
+            while ( tail.next != null ) {
+                tail = tail.next;
+            }
+            tail.next = new Node<E>( e );
+        }
+        size++;
+        return true;
     }
     
     /**
-     * Constructor adding in all the elements in Collection c
-     * @param c is the collection to build the arraylist at
+     * adds the object to the specified index
+     * @param index the index to add e to
+     * @param e the element to add
      */
-    public MyArrayList( Collection<E> c ) {
-        this( c.size() );
-        addAll( c );
-    }
-
-    /**
-     * Adds an object to the end of the array
-     * 
-     * @param obj the object to add
-     * @return true no matter what
-     */
-    public boolean add( E obj ) {
-        ensureCapacity( size + 2);
-        size++;
-        vals[size - 1] = obj;
-        return true;
-    }
-
-    /**
-     * Adds an object to a certain index in the array
-     * 
-     * @param index the index to add the obj at
-     * @param obj the object to add
-     */
-    public void add( int index, E obj ) {
-        ensureCapacity( size + 2 );
-        for ( int i = size + 1; i > index; i-- ) {
-            vals[i] = vals[i - 1];
-        }
-        size++;
-        vals[index] = obj;
-    }
-
-    /**
-     * Removes the first occurrence of Object o
-     * 
-     * @param o the object to remove
-     * @return true no matter what
-     */
-    public boolean remove( Object o ) {
-        remove( indexOf( o ) );
-        return true;
-    }
-
-    /**
-     * Remove the Object at index index
-     * 
-     * @param index the index at which to remove the object
-     * @return the Object that was removed
-     */
-    @SuppressWarnings("unchecked")
-    public E remove( int index ) {
+    public void add( int index, E e ) {
         if ( index < 0 || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
-        Object toReturn = vals[index];
-        for ( int i = index; i < size - 1; i++ ) {
-            vals[i] = vals[i + 1];
+        Node<E> temp = head;
+        for ( int i = 0; i < index - 1; i++ ) {
+            temp = temp.next;
         }
-        vals[--size] = null;
-        return (E) toReturn;
+        temp.next = new Node<E>( e, temp.next );
+        size++;
     }
-
+    
     /**
-     * Returns the Object o's last occurence's index
-     * 
-     * @param o the object to return the index of
-     * @return the Object o's last occurence's index
+     * removes the specified object
+     * @param o the object to remove
+     * @return true if the list contains the element
      */
-    public int indexOf( Object o ) {
-        for ( int i = 0; i < size; i++ ) {
-            if ( vals[i].equals( o ) ) {
-                return i;
+    public boolean remove( Object o ) {
+        Node<E> temp = head;
+        while ( ! temp.next.data.equals( o ) ) {
+            temp = temp.next;
+            if ( temp.next == null ) {
+                return false;
             }
         }
-        return -1;
+        size--;
+        
+        temp.next = temp.next.next;
+        return true;
     }
-
+    
     /**
-     * Returns the Object o's last occurence's index
-     * 
-     * @param o the object to find the last index of
-     * @return -1 or the last index of the object
-     */
-    public int lastIndexOf( Object o ) {
-        for ( int i = size - 1; i >= 0; i-- ) {
-            if ( vals[i].equals( o ) )
-                return i;
-        }
-        return -1;
-    }
-
-    /**
-     * Returns  the object at the index
-     * @param index the index to get the object at
+     * removes the object at the index
+     * @param index the index of the object to remove
      * @return the object at the index
+     * @throws IndexOutOfBoundsException when index < 0 
+     * || index >= size
      */
-    @SuppressWarnings("unchecked")
+    public E remove( int index ) {
+        if ( index < 0 || index >= size ) {
+           throw new IndexOutOfBoundsException();
+        }
+        Node<E> temp = head;
+        E rem;
+        for ( int i = 0; i < index - 1; i++ ) {
+            temp = temp.next;
+        }
+        rem = temp.next.data;
+        temp.next = temp.next.next;
+        size--;
+        return rem;
+    }
+    
+    /**
+     * returns the element at index index
+     * @param index the element to get
+     * @return the element at the specified index
+     * @throws IndexOutOfBoundsException when 
+     * index < 0 || index >= size
+     */
     public E get( int index ) {
         if ( index < 0 || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
-        else
-            return (E) vals[index];
+        Node<E> temp = head;
+        for ( int i = 0; i < index; i++ ) {
+            temp = temp.next;
+        }
+        return temp.data;
     }
-
     
     /**
-     * sets a certain index to a certain object
+     * sets a thing to a thing
      * @param index the index to change
-     * @param o the object to replace the object at index index
-     * @return the object replaced
+     * @param obj the obj to replace the index w
+     * @throws IndexOutOfBoundsException if index < 0 || index >= size
+     * @return the previous obj
      */
-    @SuppressWarnings("unchecked")
-    public E set( int index, E o ) {
-        Object toReturn = vals[index];
-        vals[index] = o;
-        return (E) toReturn;
+    public E set( int index, E obj ) {
+        if ( index < 0 || index >= size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        E toReturn = remove( index );
+        add( index, obj );
+        return toReturn;
     }
-
+    
     /**
-     * gets the amount of objects
-     * @return the amount of objects
+     * gives the size of the linkedlist
+     * @return the amount of elements in the linkedlist
      */
     public int size() {
         return size;
     }
-
+    
     /**
-     * says if the array contains a certain object
-     * @param o the object to find
-     * @return if Object o exists in the array 
+     * tells whether or not the specified element is 
+     * in the linkedlist
+     * @param o the object that may or may not be in
+     * the list
+     * @return whether o is in the list or not
      */
     public boolean contains( Object o ) {
-        return java.util.Arrays.asList( vals ).indexOf( o ) > -1;
-    }
-
-    /**
-     * Makes sure the array is at a certain length
-     * @param minCap the minimum capacity for the array to be at
-     */
-    public void ensureCapacity( int minCap ) {
-        Object[] temp = new Object[vals.length];
-        // if ( minCap < 0 )
-        // {
-        // temp = new Object[Integer.MAX_VALUE];
-        // }
-        if ( minCap > vals.length ) {
-            temp = new Object[minCap];
-            for ( int i = 0; i < vals.length; i++ ) {
-                temp[i] = vals[i];
+        Node<E> temp = head;
+        while ( temp != null ) {
+            if ( temp.data.equals( o ) ) {
+                return true;
             }
-            vals = new Object[minCap];
-            for ( int i = 0; i < vals.length; i++ ) {
-                vals[i] = temp[i];
-            }
+            temp = temp.next;
         }
-
-    }
-
-    /**
-     * Returns the array as a String
-     * 
-     * @return the array as a String
-     */
-    public String toString() {
-        if ( size != 0 ) {
-            String toReturn = "[";
-            for ( int i = 0; i < size - 1; i++ ) {
-                toReturn += vals[i] + ", ";
-            }
-            toReturn += vals[size - 1] + "]";
-            return toReturn;
-        }
-        else {
-            return "[]";
-        }
+        return false;
     }
     
     /**
-     * Returns if the array is empty
-     * @return true of the array is empty or false if it isn't
+     * says if the list is empty
+     * @return if the list contains 0 elements
      */
     public boolean isEmpty() {
-        return vals.length == 0;
+        return size == 0;
     }
     
     /**
-     * Adds all collection values to the array
-     * @throws NullPointerException if the collection is empty
-     * @param c the collection to add
+     * adds all elements in the collection to the linkedlist
+     * @param c the collection of elements to add
      */
     public void addAll( Collection<E> c ) {
-        if ( c == null ) {
-            throw new NullPointerException();
-        }
-        for ( E elem : c ) {
-            add( elem );
+        for ( E e : c ) {
+            add( e );
         }
     }
     
     /**
-     * trims to size
-     */
-    public void trimToSize() {
-        Object[] temp = new Object[size];
-        for ( int i = 0; i < size; i++ ) {
-            temp[i] = vals[i];
-        }
-        vals = new Object[size];
-        for ( int i = 0; i < temp.length; i++ ) {
-            vals[i] = temp[i];
-        }
-    }
-    
-    /**
-     * Removes all elements from the array
+     * clears the linkedlist
      */
     public void clear() {
-        vals = new Object[0];
+        head = null;
         size = 0;
     }
     
     /**
-     * @param from is the starting index of what to remove
-     * @param to is the ending index of what to remove
-     * @throws IndexOutOfBoundsException if from or 
-     * to is out of the index range
+     * returns the index of the first occurrence of the 
+     * specified object
+     * @param o the object to find the index of
+     * @return the object's first index
+     */
+    public int indexOf( Object o ) {
+        int index = 0;
+        for ( Node<E> temp = head; temp != null; temp = temp.next ) {
+            if ( temp.data.equals( o ) ) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+    
+    /**
+     * returns the last occurrence's index
+     * @param o the object to find the last index of
+     * @return the last index of the object
+     */
+    public int lastIndexOf( Object o ) {
+        int index = 0;
+        int curr = 0;
+        for ( Node<E> temp = head; temp != null; temp = temp.next ) {
+            if ( temp.data.equals( o ) ) {
+                index = curr;
+            }
+            curr++;
+        }
+        return index;
+    }
+    
+    /**
+     * removes all elements between the specified
+     * indices non inclusive
+     * @param from the first element to remove
+     * @param to the index after the last element to
+     * remove
      */
     public void removeRange( int from, int to ) {
-        if( from < 0 || to > size || from > size ) {
-            throw new IndexOutOfBoundsException();
-        }
-        for ( int i = to; i >= from; i-- ) {
+        for ( int i = to - 1; i >= from; i-- ) {
             remove( i );
         }
     }
     
     /**
-     * @return Object array of the arraylsitasatop
+     * returns an array version of the linkedlist
+     * @return an array of the linkedlist elements
      */
     public Object[] toArray() {
-        Object[] newArray = new Object[size];
-        for ( int i = 0; i < newArray.length; i++ ) {
-            newArray[i] = vals[i];
+        Object[] toReturn = new Object[ size ];
+        int index = 0;
+        for ( Node<E> temp = head; temp != null; temp = temp.next ) {
+            toReturn[ index ] = ( Object ) temp.data;
+            index++;
         }
-        return newArray;
+        return toReturn;
     }
     
     /**
-     * tests to see if the array is equals to the araryl[
-     * @throws NullPointerException if the parameter is null
-     * @return if the arraylist equals the inputted arraylist
+     * returns if the object is equal to the linkedlist
+     * @param o the object to test
+     * @return if the object is equal to the linkedlist
      */
-    public boolean equals( MyArrayList<E> m ) {
-        if ( m == null ) {
-            throw new NullPointerException();
+    public boolean equals( Object o ) {
+        if ( o == this ) {
+            return true;
         }
-        for ( int i = 0; i < size; i++ ) {
-            if ( !( vals[i].equals( m.get( i ) ) ) ) {
-                return false;
+        if ( ! (o instanceof MyLinkedList ) ) {
+            return false;
+        }
+        MyLinkedList other = ( MyLinkedList ) o;
+        if ( size() == other.size() ) {
+            for (int i = 0; i < size; i++ ) {
+                if ( ! get( i ).equals( other.get( i ) ) ) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
-    
+
+    /**
+     * Used to create a visual of the linked list 
+     * ( readable )
+     * @return a string version of the linkedlist
+     */
+    public String toString() {
+        if ( size == 0 ) {
+            return "[]";
+        }
+        String toReturn = "[";
+        Node<E> current = head;
+        while ( current.next != null ) {
+            toReturn += current.data + ", ";
+            current = current.next;
+        }
+        toReturn += current.data + "]";
+        return toReturn;
+    }
+
+    /**
+     * Node class for the LinkedList class
+     * 
+     * @author AnselmJA20
+     * @version 1.0
+     * @param <E> the Object type for the node;
+     */
+    public class Node<E> {
+        private Node<E> next;
+        private E data;
+
+        /**
+         * Constructs a node with data and next node
+         * 
+         * @param data the data to set the node's
+         * data to
+         * @param next the node that this new node 
+         * looks to
+         */
+        public Node( E data, Node<E> next ) {
+            this.next = next;
+            this.data = data;
+
+        }
+
+        /**
+         * constructs a new node with just data and 
+         * next as null
+         * 
+         * @param data the data to set the node to
+         */
+        public Node( E data ) {
+            next = null;
+            this.data = data;
+        }
+    }
 }
