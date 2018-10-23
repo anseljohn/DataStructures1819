@@ -56,6 +56,8 @@ public class MyLinkedList<E> {
      * adds the object to the specified index
      * @param index the index to add e to
      * @param e the element to add
+     * @throws IndexOutOfBoundsException when 
+     * index < 0 || index > size
      */
     public void add( int index, E e ) {
         if ( index < 0 || index > size ) {
@@ -246,8 +248,13 @@ public class MyLinkedList<E> {
      * @param from the first element to remove
      * @param to the index after the last element to
      * remove
+     * @throws IndexOutOfBoundsException if from < 0 ||
+     * to < from || to > size
      */
     public void removeRange( int from, int to ) {
+        if ( from < 0 || to > size || from > to ) {
+            throw new IndexOutOfBoundsException();
+        }
         for ( int i = to - 1; i >= from; i-- ) {
             remove( i );
         }

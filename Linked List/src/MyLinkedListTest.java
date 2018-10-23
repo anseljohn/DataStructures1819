@@ -406,6 +406,30 @@ public class MyLinkedListTest {
         assertEquals( "[1, 1, 2, 4, 4, 5, 5]", repeat.toString() );
     }
     
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testRemoveRangeFromZero() {
+        regular.removeRange( -1, 3 );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testRemoveRangeToSize() {
+        regular.removeRange( 0, 123 );
+    }
+    
+    /**
+     * tests
+     */
+    @Test ( expected = IndexOutOfBoundsException.class )
+    public void testRemoveRangeFromTo() {
+        regular.removeRange( 4, 3 );
+    }
+    
     // toArray() tests
     /**
      * tests
