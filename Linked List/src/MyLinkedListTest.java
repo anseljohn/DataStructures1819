@@ -412,6 +412,7 @@ public class MyLinkedListTest {
     @Test ( expected = IndexOutOfBoundsException.class )
     public void testRemoveRangeFromZero() {
         regular.removeRange( -1, 3 );
+        assertEquals( regular, regular );
     }
     
     /**
@@ -420,6 +421,7 @@ public class MyLinkedListTest {
     @Test ( expected = IndexOutOfBoundsException.class )
     public void testRemoveRangeToSize() {
         regular.removeRange( 0, 123 );
+        assertEquals( regular, regular );
     }
     
     /**
@@ -428,6 +430,7 @@ public class MyLinkedListTest {
     @Test ( expected = IndexOutOfBoundsException.class )
     public void testRemoveRangeFromTo() {
         regular.removeRange( 4, 3 );
+        assertEquals( regular, regular );
     }
     
     // toArray() tests
