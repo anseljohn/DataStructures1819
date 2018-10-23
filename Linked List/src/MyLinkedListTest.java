@@ -51,7 +51,7 @@ public class MyLinkedListTest {
     /**
      * tests
      */
-	@After
+    @After
     public void tearDown() {
         regular = null;
         empty = null;
@@ -79,6 +79,9 @@ public class MyLinkedListTest {
         assertEquals( "[0, 1, 2, 3, 4, 5]", regular.toString() );
     }
     
+    /**
+     * tests
+     */
     @Test
     public void testEmptyToZero() {
         empty.add( 0, 0 );
