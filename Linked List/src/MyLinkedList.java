@@ -96,20 +96,26 @@ public class MyLinkedList<E> {
      * removes the object at the index
      * @param index the index of the object to remove
      * @return the object at the index
-     * @throws IndexOutOfBoundsException when index < 0 
+     * @throws IndexOutOfBoundsException when index < 0
      * || index >= size
      */
     public E remove( int index ) {
+        Node<E> temp = head;
+        E rem = null;
         if ( index < 0 || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> temp = head;
-        E rem;
-        for ( int i = 0; i < index - 1; i++ ) {
-            temp = temp.next;
+        else if ( index == 0 ) {
+            rem = head.data;
+            head = head.next;
         }
-        rem = temp.next.data;
-        temp.next = temp.next.next;
+        else {
+            for ( int i = 0; i < index - 1; i++ ) {
+                temp = temp.next;
+            }
+            rem = temp.next.data;
+            temp.next = temp.next.next;
+        }
         size--;
         return rem;
     }
