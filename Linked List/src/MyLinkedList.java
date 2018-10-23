@@ -223,7 +223,7 @@ public class MyLinkedList<E> {
      * @return the last index of the object
      */
     public int lastIndexOf( Object o ) {
-        int index = 0;
+        int index = -1;
         int curr = 0;
         for ( Node<E> temp = head; temp != null; temp = temp.next ) {
             if ( temp.data.equals( o ) ) {

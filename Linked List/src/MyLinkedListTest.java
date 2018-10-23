@@ -357,6 +357,14 @@ public class MyLinkedListTest {
         assertEquals( 5, repeat.lastIndexOf( 3 ) );
     }
     
+    /**
+     * tests
+     */
+    @Test
+    public void testLastIndexOfNo() {
+        assertEquals( -1, regular.lastIndexOf( 10 ) );
+    }
+    
     // removeRange( int from, int to ) tests
     /**
      * tests
