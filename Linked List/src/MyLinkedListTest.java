@@ -17,20 +17,16 @@ import org.junit.Test;
  */
 public class MyLinkedListTest {
     private MyLinkedList<Integer> regular;
-	private MyLinkedList<Integer> empty;
-	private MyLinkedList<Integer> repeat;
-	private MyLinkedList<Integer> regEquals;
-	private MyLinkedList<Integer> testConstructColl;
-	
-	private Collection<Integer> addAll;
-	
-	
-    
-	/**
-	 * tests
-	 */
-	@Before
-	public void setUp() {
+    private MyLinkedList<Integer> empty;
+    private MyLinkedList<Integer> repeat;
+    private MyLinkedList<Integer> regEquals;
+    private MyLinkedList<Integer> testConstructColl;
+    private Collection<Integer> addAll;    
+    /**
+     * tests
+     */
+    @Before
+    public void setUp() {
         regular = new MyLinkedList<Integer>();
         addAll = new ArrayList<Integer>();
         regEquals = new MyLinkedList<Integer>();
@@ -74,6 +70,21 @@ public class MyLinkedListTest {
     }
     
     // add( int index, E e ) tests
+    /**
+     * tests
+     */
+    @Test
+    public void testAddToZero() {
+        regular.add( 0, 0 );
+        assertEquals( "[0, 1, 2, 3, 4, 5]", regular.toString() );
+    }
+    
+    @Test
+    public void testEmptyToZero() {
+        empty.add( 0, 0 );
+        assertEquals( "[0]", empty.toString() );
+    }
+    
     /**
      * tests
      */

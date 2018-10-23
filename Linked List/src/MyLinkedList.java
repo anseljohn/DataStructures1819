@@ -61,8 +61,11 @@ public class MyLinkedList<E> {
         if ( index < 0 || index > size ) {
             throw new IndexOutOfBoundsException();
         }
-        if ( head == null ) {
+        else if ( head == null ) {
             head = new Node<E>( e );
+        }
+        else if ( index == 0 ) {
+            head = new Node<E>( e, head );
         }
         else {
             Node<E> temp = head;
