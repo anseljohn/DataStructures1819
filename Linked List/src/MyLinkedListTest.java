@@ -78,6 +78,15 @@ public class MyLinkedListTest {
      * tests
      */
     @Test
+    public void testAddEmpty() {
+        empty.add( 0, 1 );
+        assertEquals( "[1]", empty.toString() );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
     public void testAddReg() {
         regular.add( 2, 10 );
         assertEquals( "[1, 2, 10, 3, 4, 5]", regular.toString() );

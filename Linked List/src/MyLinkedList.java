@@ -61,11 +61,16 @@ public class MyLinkedList<E> {
         if ( index < 0 || index > size ) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> temp = head;
-        for ( int i = 0; i < index - 1; i++ ) {
-            temp = temp.next;
+        if ( head == null ) {
+            head = new Node<E>( e );
         }
-        temp.next = new Node<E>( e, temp.next );
+        else {
+            Node<E> temp = head;
+            for ( int i = 0; i < index - 1; i++ ) {
+                temp = temp.next;
+            }
+            temp.next = new Node<E>( e, temp.next );
+        }
         size++;
     }
     
