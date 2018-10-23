@@ -236,6 +236,14 @@ public class MyLinkedListTest {
      * tests
      */
     @Test
+    public void testSetZeroReg() {
+        regular.set( 0, 0 );
+    }
+    
+    /**
+     * tests
+     */
+    @Test
     public void testSetRegular() {
         regular.set( 2, 9 );
         assertEquals( "[1, 2, 9, 4, 5]", regular.toString() );
