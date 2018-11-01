@@ -4,6 +4,21 @@
  * @version 1.0
  */
 public class MyTree<E> {
+    private TreeNode<E> root;
+
+    /**
+     * Add data to the tree
+     * @param data the data to add to the tree
+     */
+    public boolean add( E data ) {
+        if ( root == null ) {
+            root = new TreeNode<E>( data );
+        }
+        else {
+            
+        }
+        return true;
+    }
 
     /**
      * TreeNode class used in MyTree
