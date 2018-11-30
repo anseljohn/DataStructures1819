@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ThanksgivingMaps {
     
@@ -22,10 +23,9 @@ public class ThanksgivingMaps {
         }
         System.out.println("\n\n\nMap 2:");
 
-        Map<Integer, ArrayList<String>> foodMap2 = map2();
+        Map<Integer, TreeSet<String>> foodMap2 = map2();
         Object[] foodArray2 = foodMap2.keySet().toArray();
         for ( int i = 0; i < foodMap2.keySet().size(); i++ ) {
-            Collections.sort( foodMap2.get( foodArray2[i] ) );
             System.out.println( foodArray2[i] + ": " + foodMap2.get( foodArray2[i] ) );
         }
 
@@ -44,9 +44,9 @@ public class ThanksgivingMaps {
         return foodMap;
     }
 
-    public static Map<Integer, ArrayList<String>> map2() {
+    public static Map<Integer, TreeSet<String>> map2() {
         Map<String, Integer> foodMap = map1();
-        Map<Integer, ArrayList<String>> newFoodMap = new TreeMap<>();
+        Map<Integer, TreeSet<String>> newFoodMap = new TreeMap<>();
         ArrayList<String> foods = getFoods();
 
         Set<String> nonRepetFoods = new LinkedHashSet<>( foods );
@@ -57,7 +57,7 @@ public class ThanksgivingMaps {
                 newFoodMap.get( foodMap.get( foods.get( i ) ) ).add( foods.get( i ) );
                 newFoodMap.put( foodMap.get( foods.get( i ) ),  newFoodMap.get( foodMap.get( foods.get( i ) ) ) );
             }
-            ArrayList<String> foodsForScore = new ArrayList<>();
+            TreeSet<String> foodsForScore = new TreeSet<>();
             foodsForScore.add( foods.get( i ) );
             newFoodMap.putIfAbsent( foodMap.get( foods.get( i ) ),  foodsForScore );
         }
