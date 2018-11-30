@@ -25,6 +25,7 @@ public class ThanksgivingMaps {
         Map<Integer, ArrayList<String>> foodMap2 = map2();
         Object[] foodArray2 = foodMap2.keySet().toArray();
         for ( int i = 0; i < foodMap2.keySet().size(); i++ ) {
+            Collections.sort( foodMap2.get( foodArray2[i] ) );
             System.out.println( foodArray2[i] + ": " + foodMap2.get( foodArray2[i] ) );
         }
 
