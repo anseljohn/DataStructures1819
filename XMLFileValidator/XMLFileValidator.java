@@ -37,3 +37,10 @@ public class XMLFileValidator {
                 System.out.println( "Error on line: 1" );
             }
         }
+        if ( lineNumber == lines.size() ) {
+            if ( ! line.matches( "^(.*)</resources>^(.*)" ) ) {
+
+            }
+        }
+    }
+}
