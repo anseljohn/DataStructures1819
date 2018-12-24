@@ -22,7 +22,9 @@ public class XMLFileValidator {
             System.out.println( e );
         }
         for ( int i = lines.size() - 1; i >= 0; i-- ) {
-            
+            if ( lines.get( i ).trim().length() <= 0 ) {
+                lines.remove( i );
+            } 
         }
         for ( String line : lines ) {
             checkLine( line, lines.indexOf( line ) + 1 );
