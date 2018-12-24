@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class XMLFileValidator {
+    private static ArrayList<String> lines = new ArrayList<>();
 
     public static void main( String[] args ) {
         validate( "example.xml" );
     }
 
     public static void validate( String p ) {
-        ArrayList<String> lines = new ArrayList<>();
         File f = new File( p );
 
         try {
