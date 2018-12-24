@@ -32,6 +32,8 @@ public class XMLFileValidator {
     }
 
     public static void checkLine( String line, int lineNumber ) {
-        if ( lineNumber == 0 ) {}
-    }
-}
+        if ( lineNumber == 1 ) {
+            if( ! line.contains( "<?xml version=\"1.0\" encoding=\"utf-8\"?>") ) {
+                System.out.println( "Error on line: 1" );
+            }
+        }
