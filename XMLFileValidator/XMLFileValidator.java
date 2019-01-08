@@ -33,11 +33,11 @@ public class XMLFileValidator {
 
     public static void checkLine( String line, int lineNumber ) {
         if ( lineNumber == 1 ) {
-            if( ! line.contains( "<?xml version=\"1.0\" encoding=\"utf-8\"?>") ) {
+            if( ! line.contains( "\\s*<?xml version=\"1.0\" encoding=\"utf-8\"?>\\s*") ) {
                 System.out.println( "Error on line: 1" );
             }
         } else if ( lineNumber == lines.size() ) {
-            if ( ! line.matches( "^(.*)</resources>^(.*)" ) ) {
+            if ( ! line.matches( "^(?=\\S)<\\/\\bresources\\b>(?!\\S)" ) ) {
 
             }
         } else {
