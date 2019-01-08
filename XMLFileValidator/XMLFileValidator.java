@@ -36,11 +36,12 @@ public class XMLFileValidator {
             if( ! line.contains( "<?xml version=\"1.0\" encoding=\"utf-8\"?>") ) {
                 System.out.println( "Error on line: 1" );
             }
-        }
-        if ( lineNumber == lines.size() ) {
+        } else if ( lineNumber == lines.size() ) {
             if ( ! line.matches( "^(.*)</resources>^(.*)" ) ) {
 
             }
+        } else {
+        	if ( ! line.matches( "<\\s*string^[A-Za-z]*$=\"^[a-z_]*$\">^[^<>\\/]*$</^[A-Za-z]*$>" ) );
         }
     }
 }
