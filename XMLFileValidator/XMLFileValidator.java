@@ -18,6 +18,7 @@ public class XMLFileValidator {
             while ( sc.hasNext() ) {
                 lines.add( sc.nextLine() );
             }
+            sc.close();
         } catch ( Exception e ) {
             System.out.println( e );
         }
@@ -38,10 +39,12 @@ public class XMLFileValidator {
             }
         } else if ( lineNumber == lines.size() ) {
             if ( ! line.matches( "^(?=\\S)<\\/\\bresources\\b>(?!\\S)" ) ) {
-
+                System.out.println( "Error at end of file" );
             }
         } else {
-        	if ( ! line.matches( "<\\s*string^[A-Za-z]*$=\"^[a-z_]*$\">^[^<>\\/]*$</^[A-Za-z]*$>" ) );
+        	if ( ! line.matches( "<\\s*string^[A-Za-z]*$=\"^[a-z_]*$\">^[^<>\\/]*$</^[A-Za-z]*$>" ) ) {
+                System.out.println( "Error on line: " + lineNumber );
+            }
         }
     }
 }
