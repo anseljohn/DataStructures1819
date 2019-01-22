@@ -25,6 +25,7 @@ public class MyHeap {
                     index *= 2;
                 }
             }
+            System.out.println(index);
         }
     }
     
