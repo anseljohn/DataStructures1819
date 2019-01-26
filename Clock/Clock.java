@@ -24,7 +24,7 @@ public class Clock {
                 int ffRR;
                 System.out.print( "Fast foward/rewind how many hours? ");
                 ffRR = sc.nextInt();
-                mCurrentTime = timeAfter( ffRR );
+                mCurrentTime = mTimes[ timeAfter( ffRR ) ];
                 System.out.println( "Time after " + ffRR + " hours: " + mCurrentTime );
             }
         } catch ( Exception e ) {
@@ -32,16 +32,12 @@ public class Clock {
         }
     }
 
-    public static int timeAfter( int nextTime ) {
-        return mTimes[ trimToTimesSize( nextTime + mCurrentTime ) ];
-    }
-
-    public static int trimToTimesSize( int toTrim ) {
-        if ( toTrim >= mTimes.length ) {
-            return trimToTimesSize( toTrim - mTimes.length );
-        } else if ( toTrim < 0 ) {
-            return trimToTimesSize( mTimes.length - toTrim );
+    public static int timeAfter( int hours ) {
+        hours += mCurrentTime;
+        hours %= 24;
+        if ( hours < 0 ) {
+            hours += 24;
         }
-        return toTrim;
+        return hours;
     }
 }
