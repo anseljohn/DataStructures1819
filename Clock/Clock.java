@@ -14,10 +14,10 @@ public class Clock {
 
         try {
             Scanner sc = new Scanner( System.in );
-            System.out.print( "Current time (0-24): " );
+            System.out.print( "Current time (0-23): " );
             mCurrentTime = sc.nextInt();
-            if ( mCurrentTime > 24 || mCurrentTime < 0 ) {
-                throw new InputMismatchException( "Time cannot be outside of bounds 0-24" );
+            if ( mCurrentTime > 23 || mCurrentTime < 0 ) {
+                throw new InputMismatchException( "Time cannot be outside of bounds 0-23" );
             }
             
             while ( true ) {
