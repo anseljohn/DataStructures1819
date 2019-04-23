@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=Edge
+comment1.params=l1\ l2
+comment1.target=Edge(Location,\ Location)
+numComments=2
