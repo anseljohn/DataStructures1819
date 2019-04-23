@@ -20,9 +20,10 @@ replaceSpace string = [if x == ' ' then '_' else x | x <- string]
 afterChars string phrase = concat [x:phrase | x <- string]
 
 -- 15
-[ [x | x <- [0..9]], x | x <- [0..9]]
+nineMatrix = [show (x,y) | x <- [0..9], y <- [0..9]]
 
+-- 16
+adjNoun adjs nouns = filter (not . null)[if (head adj) == (head noun) then adj ++ " " ++ noun else [] | adj <- adjs, noun <- nouns]
 
-
-
-
+-- 17
+leapYears start end = filter (\x -> (x `mod` 4 == 0 && x `mod` 100 /= 0) || (x `mod` 400 == 0))[start, start+1..end]
