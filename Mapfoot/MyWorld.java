@@ -19,18 +19,35 @@ public class MyWorld extends World
             addObject(new Location(randomX, randomY), randomX, randomY);
         }
     }
-    
-    public ArrayList<Edge> edges() {
+
+    public ArrayList<Edge> possibleEdges() {
         ArrayList<Edge> edges = new ArrayList<>();
         List<Location> locations = getObjects(Location.class);
-        for (int i = 0; i < locations.size(); i++) {
-            for (int j = 0; j < locations.size(); j++) {
-                if (i != j) {
-                    Edge e = new Edge(locations.get(i), locations.get(j));
-                    edges.add(e);
+        if (locations.size() > 1) {
+            for (int i = 0; i < locations.size(); i++) {
+                for (int j = 0; j < locations.size(); j++) {
+                    if (i != j) {
+                        Edge e = new Edge(locations.get(i), locations.get(j));
+                        edges.add(e);
+                    }
                 }
             }
         }
+        return edges;
+    }
+
+    public ArrayList<Edge> possibleEdges(Location forLoc) {
+        ArrayList<Edge> possibleEdges = new ArrayList<>();
+        List<Location> locs = getObjects(Location.class);
+        locs.remove(forLoc);
+        for (Location l : locs) {
+            possibleEdges.add(new Edge(forLoc, l));
+        }
+        return possibleEdges;
+    }
+    
+    public ArrayList<Edge> allEdges() {
+        ArrayList<Edge> edges = possibleEdges();
         drawEdges(edges);
         return edges;
     }
@@ -64,142 +81,26 @@ public class MyWorld extends World
             return false;
         }
     }
-
-    // public void prims() {
-    //     ArrayList<Edge> possibleEdges = possibleEdges();
-
-    //     List<Location> allLocations = getObjects(Location.class);
-    //     ArrayList<Edge> finalizedEdges = new ArrayList<>();
-
-    //     for (Edge e : possibleEdges) {
-    //         e.getLocOne().addEdge(e);
-    //         e.getLocTwo().addEdge(e);
-    //     }
-
-    //     for (int i = 0; i < allLocations.size(); i++) {
-    //         Location currentLocation = allLocations.get(i);
-    //         if (! currentLocation.isPermanent()) {
-    //             ArrayList<Edge> connectedEdges = currentLocation.getEdges();
-    //             for (Edge e : connectedEdges) {
-    //                 e.getOppositeSide(currentLocation).setDistance(e.getDistance());
-    //             }
-                
-    //             ArrayList<Location> currentConnections = currentLocation.getConnections();
-    //             Location closest = currentConnections.get(0);
-    //             for (int j = 1; j < currentConnections.size(); j++) {
-    //                 if (! closest.isPermanent()) {
-    //                     if (currentConnections.get(j).getDistance() < closest.getDistance()) {
-    //                         closest = currentConnections.get(j);
-    //                     }
-    //                 } else {
-    //                     closest = currentLocation.getConnections().get(j);
-    //                 }
-    //             }
-    //             if (! closest.isPermanent()) {
-    //                 currentLocation.setPermanent();
-    //                 closest.setPermanent();
-    //                 finalizedEdges.add(new Edge(currentLocation, closest));
-    //             }
-    //             System.out.println("Got here");
-    //             boolean hasTempsConnected = false;
-    //             for (Location l : currentLocation.getConnections()) {
-    //                 if (! l.isPermanent()) {
-    //                     hasTempsConnected = true;
-    //                 }
-    //             }
-    //             if (!hasTempsConnected) {
-    //                 ArrayList<Location> newConnections = currentLocation.getConnections();
-    //                 Location newClosest = currentConnections.get(0);
-
-    //                 ArrayList<Location> alreadyConnected = new ArrayList<>();
-    //                 alreadyConnected.add(currentLocation);
-    //                 for (Edge e : finalizedEdges) {
-    //                     if (e.getOppositeSide(currentLocation) != null) {
-    //                         alreadyConnected.add(e.getOppositeSide(currentLocation));
-    //                     }
-    //                 }
-
-    //                 for (int j = 1; j < newConnections.size(); j++) {
-    //                     if (! alreadyConnected.contains(newConnections.get(j))
-    //                         && newConnections.get(j).getDistance() < newClosest.getDistance()) {
-    //                         newClosest = newConnections.get(j);
-    //                     }
-    //                 }
-    //                 finalizedEdges.add(new Edge(currentLocation, newClosest));
-    //             }
-    //         }
-    //     }
-    //     drawEdges(finalizedEdges);
-    // }
-
+    
     public void prims() {
-        List<Location> allLocations = getObjects(Location.class);
-        Location pastLocation = allLocations.get(0);
-        pastLocation.setDistance(0);
-        ArrayList<Location> currentConnections = pastLocation.getConnections();
-        ArrayList<Edge> currentEdges = pastLocation.getEdges();
-        ArrayList<Edge> finalizedEdges = new ArrayList<>();
-        ArrayList<Edge> possibleEdges = possibleEdges();
+        List<Location> connected = new ArrayList<>();
+        List<Location> notConnected = getObjects(Location.class);
+        connected.add(notConnected.remove(0));
 
-        for (Edge e : possibleEdges) {
-            e.getLocOne().addEdge(e);
-            e.getLocTwo().addEdge(e);
+        ArrayList<Edge> allEdges = possibleEdges();
+        ArrayList<Edge> toBuild = new ArrayList<>();
+
+        int i = 0;
+        while (notConnected.size() != 0) {
+            ArrayList<Edge> containing = possibleEdges(connected.get(i));
+            Location closest = Location.getClosest(connected.get(i), notConnected);
+            toBuild.add(new Edge(connected.get(i), closest));
+            notConnected.remove(closest);
+            connected.add(closest);
+            i++;
         }
-
-        for (Edge e : currentEdges) {
-            e.getOppositeSide(pastLocation).setDistance(e.getDistance());
-        }
-
-        Location closest = currentConnections.get(0);
-        for (int i = 1; i < currentConnections.size(); i++) {
-            if (currentConnections.get(i).getDistance() < closest.getDistance()) {
-                closest = currentConnections.get(i);
-            }
-        }
-        finalizedEdges.add(new Edge(pastLocation, closest));
-
-
-
-        while (!allArePermanent(allLocations)) {
-            
-        }
-        drawEdges(finalizedEdges);
-    }
-
-    public boolean allArePermanent(List<Location> locations) {
-        for (Location l : locations) {
-            if (! l.isPermanent()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public ArrayList<Edge> possibleEdges() {
-        ArrayList<Edge> edges = new ArrayList<>();
-        List<Location> locations = getObjects(Location.class);
-        if (locations.size() > 1) {
-            for (int i = 0; i < locations.size(); i++) {
-                for (int j = 0; j < locations.size(); j++) {
-                    if (i != j) {
-                        Edge e = new Edge(locations.get(i), locations.get(j));
-                        edges.add(e);
-                    }
-                }
-            }
-        }
-        return edges;
-    }
-
-    public ArrayList<Edge> possibleEdges(Location forLoc) {
-        ArrayList<Edge> possibleEdges = new ArrayList<>();
-        List<Location> locs = getObjects(Location.class);
-        locs.remove(forLoc);
-        for (Location l : locs) {
-            possibleEdges.add(new Edge(forLoc, l));
-        }
-        return possibleEdges;
-    }
+        drawEdges(toBuild);
+    }   
     
     public void drawEdges(ArrayList<Edge> edges) {
         edges.forEach(edge -> edge.show(this));

@@ -1,4 +1,5 @@
 import greenfoot.*;
+import java.util.*;
 
 public class Edge {
     private Location locOne;
@@ -7,10 +8,7 @@ public class Edge {
 
     public Edge(Location l1, Location l2) {
         locOne = l1;
-        l1.addEdge(this);
         locTwo = l2;
-        l2.addEdge(this);
-        isShown = false;
     }
     
     public void show(World w) 
@@ -38,11 +36,7 @@ public class Edge {
         return locTwo;
     }
 
-    public boolean isShown() {
-        return isShown;
-    }
-
-    public Location getOppositeSide(Location l) {
+    public Location getOpposite(Location l) {
         if (getLocOne().equals(l)) {
             return getLocTwo();
         } else if (getLocTwo().equals(l)){
@@ -50,5 +44,9 @@ public class Edge {
         } else {
             return null;
         }
+    }
+
+    public boolean contains(Location l) {
+        return getLocOne().equals(l) || getLocTwo().equals(l);
     }
 }
