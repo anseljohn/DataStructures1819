@@ -86,20 +86,23 @@ public class MyWorld extends World
         List<Location> connected = new ArrayList<>();
         List<Location> notConnected = getObjects(Location.class);
         connected.add(notConnected.remove(0));
-
-        ArrayList<Edge> allEdges = possibleEdges();
+        
         ArrayList<Edge> toBuild = new ArrayList<>();
-
-        int i = 0;
+        
         while (notConnected.size() != 0) {
-            ArrayList<Edge> containing = possibleEdges(connected.get(i));
-            Location closest = Location.getClosest(connected.get(i), notConnected);
-            toBuild.add(new Edge(connected.get(i), closest));
+            ArrayList<Edge> containing = new ArrayList<>();
+            for (int j = 0; j < connected.size(); j++) {
+                containing.addAll(possibleEdges(connected.get(j)));
+            }
+            Location[] smallestEdge = Location.getClosest(connected, notConnected);
+            Location closest = smallestEdge[1];
+            toBuild.add(new Edge(smallestEdge[0], smallestEdge[1]));
             notConnected.remove(closest);
             connected.add(closest);
-            i++;
+            Greenfoot.delay(5);
+            new Edge(smallestEdge[0], smallestEdge[1]).show(this);
         }
-        drawEdges(toBuild);
+        //drawEdges(toBuild);
     }   
     
     public void drawEdges(ArrayList<Edge> edges) {

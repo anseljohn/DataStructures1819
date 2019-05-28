@@ -53,13 +53,16 @@ public class Location extends Actor
         return y;
     }
 
-    public static Location getClosest(Location l, List<Location> locations) {
-        Location closest = locations.get(0);
-        for (int i = 1; i < locations.size(); i++) {
-            if (l.getDistance(locations.get(i)) < l.getDistance(closest)) {
-                closest = locations.get(i);
+    public static Location[] getClosest(List<Location> connected, List<Location> notConnected) {
+        Location[] pair = {connected.get(0), notConnected.get(0)};
+        for (int i = 0; i < connected.size(); i++) {
+            for (int j = 0; j < notConnected.size(); j++) {
+                if (connected.get(i).getDistance(notConnected.get(j)) < pair[0].getDistance(pair[1])) {
+                    pair[0] = connected.get(i);
+                    pair[1] = notConnected.get(j);
+                }
             }
-        } 
-        return closest;
+        }
+        return pair;
     }
 }
